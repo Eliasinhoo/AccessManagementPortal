@@ -1,0 +1,23 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+
+@if (!User.Identity.IsAuthenticated)
+{
+    <h2>Welcome to the Access Management Portal</h2>
+    <a asp-area="Identity" asp-page="/Account/Login">Sign In</a>
+}
+else
+{
+
+    <h2>Welcome, @User.Identity.Name</h2>
+
+    @if (User.IsInRole("Admin"))
+    {
+        <a asp-controller="Licenses" asp-action="Index">Admin Dashboard</a>
+    }
+    else
+    {
+        <a asp-controller="Products" asp-action="Index">My Products</a>
+    }
+}

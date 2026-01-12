@@ -1,0 +1,35 @@
+﻿@model IEnumerable<License>
+
+<h2>All Licenses</h2>
+
+<table>
+    <thead>
+        <tr>
+            <th>User</th>
+            <th>Product</th>
+            <th>Status</th>
+            <th>Delete</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var license in Model)
+        {
+            <tr>
+                <td>@license.ApplicationUser.Email</td>
+                <td>@license.Product.Name</td>
+                <td>@license.IsActive</td>
+                <td>
+                    <form asp-controller="Licenses"
+                          asp-action="Delete"
+                          asp-route-id="@license.Id"
+                          method="post"
+                          onsubmit="return confirm('Delete this license?');">
+
+
+                        <button type="submit">Delete</button>
+                    </form>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
