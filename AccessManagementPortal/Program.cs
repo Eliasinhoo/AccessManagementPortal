@@ -1,5 +1,6 @@
 using AccessManagementPortal.Data;
 using AccessManagementPortal.Models;
+using AccessManagementPortal.Services;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
@@ -21,6 +22,7 @@ builder.Services
     .AddEntityFrameworkStores<ApplicationDbContext>()
     .AddDefaultTokenProviders();
 
+builder.Services.AddScoped<ILicenseService, LicenseService>();
 
 var app = builder.Build();
 
