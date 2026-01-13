@@ -1,5 +1,6 @@
 ﻿using AccessManagementPortal.Data;
 using AccessManagementPortal.Services;
+using AccessManagementPortal.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -23,15 +24,16 @@ namespace AccessManagementPortal.Controllers
         {
             var q = new LicenseQuery(isActive, productId);
 
-            var licenses = await _licenseService.GetLicensesAsync(q);
+            var vm = new LicensesIndexVm
+            {
+                IsActive = isActive,
+                ProductId = productId,
+                Licenses = await _licenseService.GetLicensesAsync(q),
+                Products = await _db.Products.OrderBy(p => p.Name).ToListAsync()
+            };
 
-            //var licenses = await _db.Licensesc
-            //    .Include(l => l.Product)
-            //    .Include(l => l.ApplicationUser)
-            //    .OrderByDescending(l => l.Product)
-            //    .ToListAsync();
 
-            return View(licenses);
+            return View(vm);
         }
 
         [HttpPost]
@@ -50,6 +52,20 @@ namespace AccessManagementPortal.Controllers
 
             return RedirectToAction("Index");
 
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> ToggleActive(int id)
+        {
+            var license = await _db.Licenses.FindAsync(id);
+            if (license == null)
+            {
+                return NotFound();
+            }
+            license.IsActive = !license.IsActive;
+            _db.Licenses.Update(license);
+            await _db.SaveChangesAsync();
+            return RedirectToAction("Index");
         }
 
 

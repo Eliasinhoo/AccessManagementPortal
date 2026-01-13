@@ -2,7 +2,7 @@
 
 namespace AccessManagementPortal.ViewModels
 {
-    public class LicenseIndexVm
+    public class LicensesIndexVm
     {
         public List<License> Licenses { get; set; } = new List<License>();
         public List<Product> Products { get; set; } = new List<Product>();

@@ -1,36 +1,71 @@
-﻿@model IEnumerable<License>
+﻿@model AccessManagementPortal.ViewModels.LicensesIndexVm;
 
 <h2>All Licenses</h2>
 
+<form method="get" asp-action="Index">
+    <select name="isActive">
+        <option value="" selected="@(Model.IsActive is null)">All</option>
+        <option value="true" selected="@(Model.IsActive == true)">Active</option>
+        <option value="false" selected="@(Model.IsActive == false)">Inactive</option>
+    </select>
+
+    <select name="productId">
+        <option value="" selected="@(Model.ProductId is null)">All products</option>
+        @foreach (var p in Model.Products)
+        {
+            <option value="@p.Id" selected="@(Model.ProductId == p.Id)">@p.Name</option>
+        }
+    </select>
+
+    <button type="submit">Filter</button>
+    <a asp-action="Index">Clear</a>
+</form>
 
 <table>
     <thead>
         <tr>
-            <th>User</th>
-            <th>Product</th>
-            <th>Active?</th>
-            <th>Delete</th>
+            <th class="px-4 py-2">User</th>
+            <th class="px-4 py-2">Product</th>
+            <th class="px-4 py-2">Type</th>
+            <th class="px-4 py-2">Active?</th>
+            <th class="px-4 py-2">Expires</th>
+			<th class="px-4 py-2">Toggle</th>
+            <th class="px-4 py-2">Delete</th>
         </tr>
     </thead>
+    
     <tbody>
-        @foreach (var license in Model)
+        @foreach (var license in Model.Licenses)
         {
             <tr>
-                <td>@license.ApplicationUser.Email</td>
-                <td>@license.Product.Name</td>
-                <td>
-                    <span aria-labl="@(license.IsActive ? true : false)">
+                <td class="text-center align-middle">@license.ApplicationUser.Email</td>
+                <td class="text-center align-middle">@license.Product.Name</td>
+                <td class="text-center align-middle">@license.LicenseType</td>
+                <td class="text-center align-middle">
+                    <span aria-label="@(license.IsActive ? "Active" : "Inactive")">
                         @(license.IsActive ? "✅" : "❌")
                     </span>
                 </td>
-                <td>
+                <td class="text-center align-middle">@license.ExpiryDate</td>
+                <td class="text-center align-middle">
+                    <form asp-controller="Licenses"
+                          asp-action="ToggleActive"
+                          asp-route-id="@license.Id"
+                          method="post">
+                        @Html.AntiForgeryToken()
+                        <button type="submit">
+                            @(license.IsActive ? "Deactivate" : "Activate")
+                        </button>
+                    </form>
+
+                </td>
+                <td class="text-center align-middle">
                     <form asp-controller="Licenses"
                           asp-action="Delete"
                           asp-route-id="@license.Id"
                           method="post"
                           onsubmit="return confirm('Delete this license?');">
-
-
+                        @Html.AntiForgeryToken()
                         <button type="submit">Delete</button>
                     </form>
                 </td>
