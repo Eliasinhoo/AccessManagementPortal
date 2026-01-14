@@ -53,6 +53,14 @@ namespace AccessManagementPortal.Controllers
 
             await _db.SaveChangesAsync();
 
+            // Audit logging
+            await _AuditLogger.LogAsync(
+                action: "DeleteLicense",
+                entityType: "License",
+                entityId: id,
+                actorUserId: User.Identity.Name,
+                actorEmail: User.Identity.Name);
+
             return RedirectToAction("Index");
 
             
