@@ -23,6 +23,7 @@ builder.Services
     .AddDefaultTokenProviders();
 
 builder.Services.AddScoped<ILicenseService, LicenseService>();
+builder.Services.AddScoped<IAuditLogger, AuditLogger>();
 
 var app = builder.Build();
 

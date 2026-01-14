@@ -15,6 +15,7 @@ namespace AccessManagementPortal.Data
 
         public DbSet<License> Licenses => Set<License>();
         public DbSet<Product> Products => Set<Product>();
+        public DbSet<AuditLog> AuditLogs => Set<AuditLog>();
         // don't define ApplicationUser table, done by identity package
 
         protected override void OnModelCreating(ModelBuilder builder)

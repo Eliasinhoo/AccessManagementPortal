@@ -12,12 +12,15 @@ namespace AccessManagementPortal.Controllers
     public class LicensesController : Controller
     {
         private readonly ApplicationDbContext _db;
+        private readonly IAuditLogger _AuditLogger;
         private readonly ILicenseService _licenseService;
 
-        public LicensesController(ApplicationDbContext db, ILicenseService licenseService)
+        public LicensesController(ApplicationDbContext db, IAuditLogger AuditLogger, ILicenseService licenseService)
         {
             _db = db;
             _licenseService = licenseService;
+            _AuditLogger = AuditLogger;
+
         }
 
         public async Task<IActionResult> Index(bool? isActive, int? productId)
@@ -52,6 +55,7 @@ namespace AccessManagementPortal.Controllers
 
             return RedirectToAction("Index");
 
+            
         }
 
         [HttpPost]
@@ -65,6 +69,16 @@ namespace AccessManagementPortal.Controllers
             license.IsActive = !license.IsActive;
             _db.Licenses.Update(license);
             await _db.SaveChangesAsync();
+
+            // Audit logging
+            await _AuditLogger.LogAsync(
+                action: "ToggleLicenseActive",
+                entityType: "License",
+                entityId: license.Id,
+                actorUserId: User.Identity.Name,
+                actorEmail: User.Identity.Name);
+
+
             return RedirectToAction("Index");
         }
 
