@@ -1,9 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 18
-VisualStudioVersion = 18.3.11312.210 d18.3
+VisualStudioVersion = 18.3.11312.210
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AccessManagementPortal", "AccessManagementPortal\AccessManagementPortal.csproj", "{527BA4E1-1771-4ECC-BA4D-D1B4680B0B22}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AccessManagementPortalTests", "AccessManagementPortalTests\AccessManagementPortalTests.csproj", "{3A4EC2DC-BEE8-49BF-BED3-1AFFF161DFA8}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{527BA4E1-1771-4ECC-BA4D-D1B4680B0B22}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{527BA4E1-1771-4ECC-BA4D-D1B4680B0B22}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{527BA4E1-1771-4ECC-BA4D-D1B4680B0B22}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3A4EC2DC-BEE8-49BF-BED3-1AFFF161DFA8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3A4EC2DC-BEE8-49BF-BED3-1AFFF161DFA8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3A4EC2DC-BEE8-49BF-BED3-1AFFF161DFA8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3A4EC2DC-BEE8-49BF-BED3-1AFFF161DFA8}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

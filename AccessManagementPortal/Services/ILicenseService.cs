@@ -8,5 +8,8 @@ namespace AccessManagementPortal.Services
     public interface ILicenseService
     {
         Task<List<License>> GetLicensesAsync(LicenseQuery query);
+
+        Task<License> ToggleLicenseAsync(int licenseId);
+
     }
 }

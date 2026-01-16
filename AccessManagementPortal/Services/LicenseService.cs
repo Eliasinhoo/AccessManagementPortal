@@ -27,5 +27,15 @@ namespace AccessManagementPortal.Services
 
             return await query.ToListAsync();
         }
+
+        public async Task<License> ToggleLicenseAsync(int licenseId)
+        {
+            var license = await _db.Licenses.FindAsync(licenseId);
+            if (license == null)
+                throw new KeyNotFoundException($"License with ID {licenseId} not found.");
+            license.IsActive = !license.IsActive;
+            await _db.SaveChangesAsync();
+            return license;
+        }
     }
 }

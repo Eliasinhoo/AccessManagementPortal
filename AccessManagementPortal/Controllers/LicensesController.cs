@@ -52,7 +52,6 @@ namespace AccessManagementPortal.Controllers
             _db.Licenses.Remove(License);
 
             await _db.SaveChangesAsync();
-
             // Audit logging
             await _AuditLogger.LogAsync(
                 action: "DeleteLicense",
@@ -69,20 +68,13 @@ namespace AccessManagementPortal.Controllers
         [HttpPost]
         public async Task<IActionResult> ToggleActive(int id)
         {
-            var license = await _db.Licenses.FindAsync(id);
-            if (license == null)
-            {
-                return NotFound();
-            }
-            license.IsActive = !license.IsActive;
-            _db.Licenses.Update(license);
-            await _db.SaveChangesAsync();
+            var License = await _licenseService.ToggleLicenseAsync(id);
 
             // Audit logging
             await _AuditLogger.LogAsync(
                 action: "ToggleLicenseActive",
                 entityType: "License",
-                entityId: license.Id,
+                entityId: License.Id,
                 actorUserId: User.Identity.Name,
                 actorEmail: User.Identity.Name);
 
